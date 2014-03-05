@@ -2,7 +2,7 @@
 """
 Created on Sun Mar 02 21:30:15 2014
 
-@author: @第五逻辑 (新浪)微博
+@author: @第五逻辑 (新浪微博)
 """
 
 import sys  
@@ -36,7 +36,7 @@ def JD_phone_list(url=u''):
         for link in links:
             if link.find(u'http://item.jd.com')==0:
                 href.append(link)
-        print '  本页面共有手机产品：',len(href)
+        print '  There is a total of  ',len(href),' phone product in this page.'
         return href
     except:
         print "  没有获取到手机网页列表！"
@@ -54,7 +54,6 @@ def JD_phone_get(url):
     except:
         p_status=1
         
-     #if p_status==1:
     try:
         jd_price=driver.find_element_by_id('jd-price').text
         jd_price=jd_price.replace(u'\uffe5','')
@@ -90,6 +89,8 @@ def JD_phone_get(url):
         p_special=strsub(sub=u'\u7279\u70b9\uff1a',p=product_detail)
     except:
         print '  产品参数获取失败'
+    p_comment=u''
+    p_tags=u''
     try:    
         revurl='http://club.jd.com/review/'+p_id+'-0-1-0.html'
         driver.get(revurl)
@@ -110,11 +111,6 @@ def JD_phone_get(url):
     except:
         print "  产品信息获取失败！"
         return None
-         
-
-'''
-#url='http://item.jd.com/929734.html'
-#url='http://item.jd.com/799544.html'
-'''
+        
 
 

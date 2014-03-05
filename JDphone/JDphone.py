@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 Created on Tue Mar 04 10:15:40 2014
 
-@author: @第五逻辑 (新浪)微博
+@author: @第五逻辑 (新浪微博)
 """
 
 import sys  
@@ -23,12 +23,21 @@ except Exception, e:
     print e
     sys.exit()
     
-start=1
-end=5
+start=5
+end=10
 for k in range(start,end+1):
+    print "page:",k
     url=u'http://list.jd.com/9987-653-655-0-0-0-0-0-0-0-1-1-'+str(k)+'-1-1-72-4137-33.html'
     links=JD_phone_list(url)
-    if links <> None:
+    
+    cur = conn.cursor()
+    cur.execute('select p_url from tb_jd_phone')
+    urls=cur.fetchall()
+    cur.close()
+    urls=[u[0] for u in urls]
+    links=list(set(links).difference(set(urls))) 
+    
+    if len(links)> 0:
         for link in links:
             phone=JD_phone_get(url=link)
             sql='INSERT INTO tb_jd_phone(p_id , p_url,  p_name,p_status ,\

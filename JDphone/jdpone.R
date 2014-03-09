@@ -87,4 +87,23 @@ mons=data.frame(mon=names(mon),freq=mon[])
 p <- ggplot(mons, aes(x=mon,y=freq,group=1))
 p + geom_line()
 
+os<-df$p_system
+os<-table(os)
+names(os)[1]<-'unknow'
+OS<-data.frame(os=names(os),freq=os[])
+OS<-OS[order(OS[,2]),]
+pie <- ggplot(OS, aes(x = '',y=freq, fill = os)) + 
+     geom_bar(stat="identity",width = 1)+
+geom_text(aes(y = freq/2 + c(0, cumsum(freq)[-length(freq)]),
+              label =freq),size=10)
+pie+ coord_polar(theta = "y")
+
+brand<-df$p_brand
+brand<-gsub('联想（Lenovo）','联想',brand)
+brand<-sort(table(brand),decreasing=T)
+names(brand)[length(brand)]<-'other'
+brands<-data.frame(name=names(brand),freq=brand[])
+brands<-brands[order(brands[,2]),]
+ggplot(brands, aes(x =name,y=freq,fill = freq)) + 
+  geom_bar(stat="identity",width = 1)+coord_flip()
 
